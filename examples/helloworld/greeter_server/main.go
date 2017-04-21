@@ -37,7 +37,7 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/mmccabe/go/examples/helloworld/helloworld"
+	pb "github.com/mmcc007/go/examples/helloworld/helloworld"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

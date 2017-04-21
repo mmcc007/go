@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"time"
 
-	pb "github.com/mmccabe/go/examples/route_guide/routeguide"
+	pb "github.com/mmcc007/go/examples/route_guide/routeguide"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"

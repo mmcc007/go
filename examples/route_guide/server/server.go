@@ -18,7 +18,7 @@ import (
 
 	"github.com/golang/protobuf/proto"
 
-	pb "github.com/mmccabe/go/examples/route_guide/routeguide"
+	pb "github.com/mmcc007/go/examples/route_guide/routeguide"
 )
 
 var (
