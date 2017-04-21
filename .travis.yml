@@ -3,4 +3,4 @@ language: go
 install:
   - go get google.golang.org/grpc
   - go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
-  - go build -o route_guide/server/server route_guide/server/server.go
+  - go build -o examples/route_guide/server/server examples/route_guide/server/server.go
