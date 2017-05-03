@@ -6,5 +6,5 @@ install:
   - go build -o examples/route_guide/server/server examples/route_guide/server/server.go
   - go get github.com/golang/mock/gomock
   - go get github.com/golang/mock/mockgen
-  - ~/go/bin/mockgen -destination examples/helloworld/mock_helloworld/hw_mock.go github.com/mmcc007/go/examples/helloworld/helloworld GreeterClient
+  - $GOPATH/go/bin/mockgen -destination examples/helloworld/mock_helloworld/hw_mock.go github.com/mmcc007/go/examples/helloworld/helloworld GreeterClient
 

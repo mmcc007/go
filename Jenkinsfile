@@ -1,7 +1,7 @@
 pipeline {
   agent any
-    slsSetEnv('go', '1.8.1')
   /*
+    slsSetEnv('go', '1.8.1')
   environment {
         CC = 'clang'
 	// Install the desired Go version
