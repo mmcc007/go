@@ -1,4 +1,11 @@
 .DEFAULT_GOAL := test
+UNAME_S = $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	PROTOC_BIN = /usr/bin/protoc
+else
+	PROTOC_BIN = protoc
+endif
+
 setup:
 	# get the grpc stuff
 	go get google.golang.org/grpc
@@ -8,9 +15,9 @@ setup:
 	go get -u github.com/golang/protobuf/protoc-gen-go
 
 	# generate the stubs for helloworld
-	protoc -I examples/helloworld/helloworld examples/helloworld/helloworld/helloworld.proto --go_out=plugins=grpc:examples/helloworld/helloworld		
+	$(PROTOC_BIN) -I examples/helloworld/helloworld examples/helloworld/helloworld/helloworld.proto --go_out=plugins=grpc:examples/helloworld/helloworld		
 	# generate the stubs for route_guide
-	protoc -I examples/route_guide/routeguide examples/route_guide/routeguide/route_guide.proto --go_out=plugins=grpc:examples/route_guide/routeguide
+	$(PROTOC_BIN) -I examples/route_guide/routeguide examples/route_guide/routeguide/route_guide.proto --go_out=plugins=grpc:examples/route_guide/routeguide
 	# build the server for testing 
 	go build -o examples/route_guide/server/server examples/route_guide/server/server.go
 
