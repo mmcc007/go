@@ -7,9 +7,8 @@ pipeline {
 
     	// Export environment variables pointing to the directory where Go was installed
     	GOROOT=${root}
-	PATH=${root}/bin
-	GO=${root}/bin
-        sh 'go version'
+	PATH='${root}/bin'
+	GO='${root}/bin'
     }
   stages {
     stage('build') {
