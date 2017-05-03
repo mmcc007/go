@@ -8,9 +8,9 @@ setup:
 	go get -u github.com/golang/protobuf/protoc-gen-go
 
 	# generate the stubs for helloworld
-	$(GOPATH)/bin/protoc -I examples/helloworld/helloworld examples/helloworld/helloworld/helloworld.proto --go_out=plugins=grpc:examples/helloworld/helloworld		
+	protoc -I examples/helloworld/helloworld examples/helloworld/helloworld/helloworld.proto --go_out=plugins=grpc:examples/helloworld/helloworld		
 	# generate the stubs for route_guide
-	$(GOPATH)/bin/protoc -I examples/route_guide/routeguide examples/route_guide/routeguide/route_guide.proto --go_out=plugins=grpc:examples/route_guide/routeguide
+	protoc -I examples/route_guide/routeguide examples/route_guide/routeguide/route_guide.proto --go_out=plugins=grpc:examples/route_guide/routeguide
 	# build the server for testing 
 	go build -o examples/route_guide/server/server examples/route_guide/server/server.go
 
