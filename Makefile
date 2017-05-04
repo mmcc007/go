@@ -23,12 +23,12 @@ endif
 protoc_install: protoc_download
 ifdef BUILD_PROTOC
 	# cd to tmp dir
-	$(call chdir,/tmp/protobuf)
-	./autogen.sh
-	./configure
-	make
-	#make check
-	sudo make install
+	cd /tmp/protobuf; \
+	./autogen.sh; \
+	./configure; \
+	make; \
+	#make check; \
+	sudo make install; \
 	sudo ldconfig
 endif
 
