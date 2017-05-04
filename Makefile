@@ -43,7 +43,7 @@ ifdef INSTALL_GO
 	# no golang at version 1.8.1 download and install
 	wget https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz
 	sudo tar -C /usr/local -xzf go1.8.1.linux-amd64.tar.gz
-	export PATH=$PATH:/usr/local/go/bin
+	export PATH=/usr/local/go/bin:$PATH
 endif
 
 setup: goinstall protobuf/install
