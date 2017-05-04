@@ -23,7 +23,7 @@ endif
 protoc_install: protoc_download
 ifdef BUILD_PROTOC
 	# cd to tmp dir
-	cd /tmp/protobuf; \
+	cd /tmp/protoc; \
 	./autogen.sh; \
 	./configure; \
 	make; \
