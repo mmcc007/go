@@ -20,9 +20,10 @@ ifneq ($(GO_VERSION),$(GO_VERSION_REQ))
 	INSTALL_GO = TRUE
 endif
 
-protobuf/install: protocdownload
+protoc_install: protoc_download
 ifdef BUILD_PROTOC
-	$(call chdir)
+	# cd to tmp dir
+	$(call chdir,/tmp/protobuf)
 	./autogen.sh
 	./configure
 	make
@@ -31,11 +32,11 @@ ifdef BUILD_PROTOC
 	sudo ldconfig
 endif
 
-protocdownload:
+protoc_download:
 ifdef BUILD_PROTOC
 	# no protoc at version 3.3.0 download and build and install
 	sudo apt-get install autoconf automake libtool curl make g++ unzip
-	git clone https://github.com/google/protobuf.git
+	git clone https://github.com/google/protobuf.git /tmp/protobuf
 endif
 
 goinstall:
@@ -46,8 +47,7 @@ ifdef INSTALL_GO
 	export PATH=/usr/local/go/bin:$PATH
 endif
 
-setup: goinstall protobuf/install
-	rm -rf protobuf
+setup: goinstall protoc_install
 
 build:
 	# get the grpc stuff
