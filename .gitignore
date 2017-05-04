@@ -1,3 +1,6 @@
+# ignore downloaded golang file
+go1.8.1.linux-amd64.tar.gz
+
 # ignore protobuf build
 protobuf
 # ignore protoc auto generate files

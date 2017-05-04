@@ -21,6 +21,7 @@ ifneq ($(GO_VERSION),$(GO_VERSION_REQ))
 endif
 
 protobuf/install: protocdownload
+ifdef BUILD_PROTOC
 	$(call chdir)
 	./autogen.sh
 	./configure
@@ -28,6 +29,7 @@ protobuf/install: protocdownload
 	#make check
 	sudo make install
 	sudo ldconfig
+endif
 
 protocdownload:
 ifdef BUILD_PROTOC
@@ -45,6 +47,7 @@ ifdef INSTALL_GO
 endif
 
 setup: goinstall protobuf/install
+	rm -rf protobuf
 
 build:
 	# get the grpc stuff
