@@ -1,3 +1,5 @@
+# ignore protobuf build
+protobuf
 # ignore protoc auto generate files
 *.pb.go
 

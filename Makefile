@@ -1,5 +1,11 @@
 .DEFAULT_GOAL := test
 
+CHDIR_SHELL := $(SHELL)
+define chdir
+   $(eval _D=$(firstword $(1) $(@D)))
+   $(info $(MAKE): cd $(_D)) $(eval SHELL = cd $(_D); $(CHDIR_SHELL))
+endef
+
 # check to see if protobuf compiler needs to be built
 PROTOC_VERSION = "$(shell protoc --version)"
 PROTOC_VERSION_REQ = "libprotoc 3.3.0"
@@ -14,18 +20,23 @@ ifneq ($(GO_VERSION),$(GO_VERSION_REQ))
 	INSTALL_GO = TRUE
 endif
 
-setup:
+protobuf/install: protocdownload
+	$(call chdir)
+	./autogen.sh
+	./configure
+	make
+	#make check
+	sudo make install
+	sudo ldconfig
+
+protocdownload:
 ifdef BUILD_PROTOC
 	# no protoc at version 3.3.0 download and build and install
 	sudo apt-get install autoconf automake libtool curl make g++ unzip
 	git clone https://github.com/google/protobuf.git
-	cd protobuf/
-	./configure
-	make
-	make check
-	sudo make install
-	sudo ldconfig
 endif
+
+setup: protobuf/install
 ifdef INSTALL_GO
 	# no golang at version 1.8.1 download and install
 	wget https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz
