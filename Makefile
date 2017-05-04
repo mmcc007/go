@@ -23,7 +23,7 @@ endif
 protoc_install: protoc_download
 ifdef BUILD_PROTOC
 	# cd to tmp dir
-	cd /tmp/protoc; \
+	cd /tmp/protobuf; \
 	./autogen.sh; \
 	./configure; \
 	make; \
@@ -36,7 +36,7 @@ protoc_download:
 ifdef BUILD_PROTOC
 	# no protoc at version 3.3.0 download and build and install
 	sudo apt-get -y install autoconf automake libtool curl make g++ unzip
-	rm -rf /tmp/protoc
+	rm -rf /tmp/protobuf
 	git clone https://github.com/google/protobuf.git /tmp/protobuf
 endif
 
