@@ -1,7 +1,6 @@
 language: go
 
-before_install:
-        sudo apt-get install protobuf-compiler
-
 install:
+  - make setup
+  - make build
   - make test

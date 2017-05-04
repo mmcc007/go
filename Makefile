@@ -1,12 +1,39 @@
 .DEFAULT_GOAL := test
-UNAME_S = $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-	PROTOC_BIN = /usr/bin/protoc
-else
-	PROTOC_BIN = protoc
+
+# check to see if protobuf compiler needs to be built
+PROTOC_VERSION = "$(shell protoc --version)"
+PROTOC_VERSION_REQ = "libprotoc 3.3.0"
+ifneq ($(PROTOC_VERSION),$(PROTOC_VERSION_REQ))
+	BUILD_PROTOC = TRUE
+endif
+
+# check to see if go needs to be installed
+GO_VERSION = "$(shell go version)"
+GO_VERSION_REQ = "go version go1.8.1 linux/amd64"
+ifneq ($(GO_VERSION),$(GO_VERSION_REQ))
+	INSTALL_GO = TRUE
 endif
 
 setup:
+ifdef BUILD_PROTOC
+	# no protoc at version 3.3.0 download and build and install
+	sudo apt-get install autoconf automake libtool curl make g++ unzip
+	git clone https://github.com/google/protobuf.git
+	cd protobuf/
+	./configure
+	make
+	make check
+	sudo make install
+	sudo ldconfig
+endif
+ifdef INSTALL_GO
+	# no golang at version 1.8.1 download and install
+	wget https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz
+	tar -C /usr/local -xzf go1.8.1.linux-amd64.tar.gz
+	export PATH=$PATH:/usr/local/go/bin
+endif
+
+build:
 	# get the grpc stuff
 	go get google.golang.org/grpc
 
@@ -15,9 +42,9 @@ setup:
 	go get -u github.com/golang/protobuf/protoc-gen-go
 
 	# generate the stubs for helloworld
-	$(PROTOC_BIN) -I examples/helloworld/helloworld examples/helloworld/helloworld/helloworld.proto --go_out=plugins=grpc:examples/helloworld/helloworld		
+	protoc -I examples/helloworld/helloworld examples/helloworld/helloworld/helloworld.proto --go_out=plugins=grpc:examples/helloworld/helloworld		
 	# generate the stubs for route_guide
-	$(PROTOC_BIN) -I examples/route_guide/routeguide examples/route_guide/routeguide/route_guide.proto --go_out=plugins=grpc:examples/route_guide/routeguide
+	protoc -I examples/route_guide/routeguide examples/route_guide/routeguide/route_guide.proto --go_out=plugins=grpc:examples/route_guide/routeguide
 	# build the server for testing 
 	go build -o examples/route_guide/server/server examples/route_guide/server/server.go
 
@@ -28,7 +55,7 @@ setup:
 	# generate the mock server for helloworld client test
 	$(GOPATH)/bin/mockgen -destination examples/helloworld/mock_helloworld/hw_mock.go github.com/mmcc007/go/examples/helloworld/helloworld GreeterClient
 
-test: setup
+test: 
 	# run all tests
 	go test -v ./... > test.output
 
