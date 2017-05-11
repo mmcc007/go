@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent { label 'master' } 
   /*
     slsSetEnv('go', '1.8.1')
   environment {
